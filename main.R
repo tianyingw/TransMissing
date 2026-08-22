@@ -15,7 +15,7 @@ M = 2000 # total sample size of source and target data
 gamma = c(-1, 1, -2) 
 eta = c(1, -0.6, -0.5) 
 ## generate dataset
-set.seed(123)
+set.seed(1234)
 Y = rnorm(M, mean = 0, sd = 1)
 Z = rnorm(M, mean = 0, sd = 2) # q = 2
 eps = rnorm(M, 0, 0.2)

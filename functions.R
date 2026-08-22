@@ -67,6 +67,15 @@ fn_dr = function(data,omega_hat,m1.s,m1.t,m2.s,m2.t){
   Yt = data[which(data[,4]==0),2]
   Zt = data[which(data[,4]==0),3]
   
+  ## make fn_dr self-contained
+  ns = length(Ys)
+  nt = length(Yt)
+  
+  ## let the estimating functions use variables inside fn_dr
+  environment(ImportanceWeight_Only) <- environment()
+  environment(Imputation_Only) <- environment()
+  environment(Doubly_Robust) <- environment()
+  
   X0 = X; Y0 = Y; Z0 = Z; S0 = S
   Xs0 = Xs; Ys0 = Ys; Zs0 = Zs
   Xt0 = Xt; Yt0 = Yt; Zt0 = Zt
@@ -80,21 +89,21 @@ fn_dr = function(data,omega_hat,m1.s,m1.t,m2.s,m2.t){
     ImportanceWeight_Only(omega_hat, beta_theta_init=beta_theta_naive)
   }, warning = function(w) {
     message("Warning：", conditionMessage(w))
-    return(NA)
+    return(rep(NA,3))
   })
   ## IMP method
   beta_theta_im <- tryCatch({
     Imputation_Only(m1.t, m2.t, beta_theta_init=beta_theta_naive)
   }, warning = function(w) {
     message("Warning：", conditionMessage(w))
-    return(NA)
+    return(rep(NA,3))
   })
   ## Proposed method
   beta_theta_dr <- tryCatch({
     Doubly_Robust(omega_hat, m1.s, m2.s, m1.t, m2.t, beta_theta_init=beta_theta_naive) 
   }, warning = function(w) {
     message("Warning：", conditionMessage(w))
-    return(NA)
+    return(rep(NA,3))
   })
   
   ## bootstrap for variance estimation------------
