@@ -153,19 +153,19 @@ fn_dr = function(data,omega_hat,m1.s,m1.t,m2.s,m2.t){
       ImportanceWeight_Only(omega_hat, beta_theta_init=b.beta.theta.naive[b,])
     }, warning = function(w) {
       #message("Warning：", conditionMessage(w))
-      return(NA)
+      return(rep(NA,3))
     })
     b.beta.theta.im[b,] <- tryCatch({
       Imputation_Only(m1.t, m2.t, beta_theta_init=b.beta.theta.naive[b,]) # might be bad if m2.t has a large bias
     }, warning = function(w) {
       #message("Warning：", conditionMessage(w))
-      return(NA)
+      return(rep(NA,3))
     })
     b.beta.theta.dr[b,] <- tryCatch({
       Doubly_Robust(omega_hat, m1.s, m2.s, m1.t, m2.t, beta_theta_init=b.beta.theta.naive[b,]) 
     }, warning = function(w) {
       #message("Warning：", conditionMessage(w))
-      return(NA)
+      return(rep(NA,3))
     })
   }
   for(j in 1:3){
