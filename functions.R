@@ -125,7 +125,7 @@ fn_dr = function(data,omega_hat,m1.s,m1.t,m2.s,m2.t){
     # estimated correct density ratio model: omega(Ys,Zs)
     fit = glm(S ~ Y + Z, family = "binomial")
     eta_hat = fit$coefficients
-    omega_hat = exp(-eta_hat[1] - eta_hat[2]*Ys - eta_hat[3]*Zs)
+    omega_hat = (ns/nt)*exp(-eta_hat[1] - eta_hat[2]*Ys - eta_hat[3]*Zs)
     
     # estimated correct imputation model: m_i(Ys,Zs), m_i(Yt,Zt), i = 1,2
     fit = lm(Xs ~ Ys + Zs)
